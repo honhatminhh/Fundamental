@@ -61,6 +61,7 @@ public abstract class Nguoi {
         String strDate = fmt.format(ngaySinh);
         System.out.print("Nhap gioi tinh: ");
         gioiTinh = s.nextLine();
+        s.next();
         System.out.print("Nhap cmnd: ");
         cmnd = s.nextInt();
     }
@@ -80,3 +81,4 @@ public abstract class Nguoi {
     
     
 }
+
