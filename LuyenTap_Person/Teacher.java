@@ -56,6 +56,7 @@ public class Teacher extends Person {
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+    @Override
     public void addPerson(){
         super.addPerson();
         System.out.print("Number of classes: ");
@@ -63,6 +64,7 @@ public class Teacher extends Person {
         System.out.print("Base salary: ");
         setBaseSalary(Double.parseDouble(scanner.nextLine()));
     }
+    @Override
     public void updatePerson(){
         super.updatePerson();
         System.out.print("Number of classes: ");
@@ -70,6 +72,7 @@ public class Teacher extends Person {
         System.out.print("Base salary: ");
         setBaseSalary(Double.parseDouble(scanner.nextLine()));
     }
+    @Override
     public void displayDetails(){
         super.displayDetails();
         System.out.println(", Number of classes: " + getNumberOfClasses() + ", Base salary: " + getBaseSalary() + ", Income: " + calculateIncome());

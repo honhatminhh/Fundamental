@@ -43,11 +43,11 @@ public abstract class Person implements IPerson {
     }
 
     public void addPerson() {
-        System.out.print("ID: ");
+        System.out.print("Input ID: ");
         setId(scanner.nextLine());
-        System.out.print("Name: ");
+        System.out.print("Input Name: ");
         setName(scanner.nextLine());
-        System.out.print("Date of birth: ");
+        System.out.print("Input date of birth: ");
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = scanner.nextLine();
         try {

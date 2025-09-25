@@ -13,7 +13,7 @@ public class Student extends Person {
         this.gpa = gpa;
         this.tuitionFee = tuitionFee;
     }
-
+    @Override
     public double getGpa() {
         return gpa;
     }   
@@ -38,7 +38,7 @@ public class Student extends Person {
             return 0;
         }
     }
-
+    @Override
     public void addPerson() {
         super.addPerson();
         System.out.print("GPA: ");
@@ -46,6 +46,7 @@ public class Student extends Person {
         System.out.print("Tuition fee: ");
         setTuitionFee(Double.parseDouble(scanner.nextLine()));
     }
+    @Override
     public void updatePerson(){
         super.updatePerson();
         System.out.print("GPA: ");
@@ -53,6 +54,7 @@ public class Student extends Person {
         System.out.print("Tuition fee: ");
         setTuitionFee(Double.parseDouble(scanner.nextLine()));
     }
+    @Override
     public void displayDetails(){
         super.displayDetails();
         System.out.println(", GPA: " + getGpa() + ", Tuition fee: " + getTuitionFee() + ", Income: " + calculateIncome());

@@ -1,17 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package LuyenTap_Person;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Processor {
+
     public static void main(String[] args) {
         PersonList personList = new PersonList();
         int choose = -1;
         Scanner scanner = new Scanner(System.in);
-        do{
+        do {
             System.out.println("\nMENU:");
             System.out.println("0. Exit");
             System.out.println("1. Add new student");
@@ -25,7 +22,7 @@ public class Processor {
             System.out.println("9. Count");
             System.out.print("Choose method: ");
             choose = Integer.parseInt(scanner.nextLine());
-            switch(choose){
+            switch (choose) {
                 case 1:
                     Student student = new Student();
                     personList.addPerson(student);
@@ -44,19 +41,29 @@ public class Processor {
                     break;
                 case 5:
                     System.out.print("Enter id of the person you want to find: ");
-                    personList.findPersonById(scanner.nextLine());
+                    Person found = personList.findPersonById(scanner.nextLine());
+                    if (found != null) {
+                        found.displayDetails();
+                    }
                     break;
                 case 6:
                     System.out.println("Person List:");
                     personList.displayAll();
                     break;
                 case 7:
-                    System.out.println("The teacher with highest income is:");
-                    personList.findTeacherWithHighestIncome();
+                    Teacher topTeacher = personList.findTeacherWithHighestIncome();
+                    if (topTeacher != null) {
+                        topTeacher.displayDetails();
+                    }
                     break;
+
                 case 8:
-                    System.out.println("Top 3 students is:");
-                    personList.findTop3Students();
+                    System.out.println("Top 3 students are:");
+                    ArrayList<Student> topStudents = personList.findTop3Students();
+                    for (int i = 0; i < topStudents.size(); i++) {
+                        System.out.print("- " + (i + 1) + " Student: ");
+                        topStudents.get(i).displayDetails();
+                    }
                     break;
                 case 9:
                     personList.Count();
@@ -67,6 +74,6 @@ public class Processor {
             }
             System.out.print("Continue? 1-Yes, 0-No: ");
             choose = Integer.parseInt(scanner.nextLine());
-        }while(choose!=0);
+        } while (choose != 0);
     }
 }

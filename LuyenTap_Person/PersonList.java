@@ -1,4 +1,3 @@
-
 package LuyenTap_Person;
 
 import java.util.ArrayList;
@@ -15,115 +14,103 @@ public class PersonList {
     }
 
     public void displayAll() {
-        for (int i = 0; i < personList.size(); i++) {
-            personList.get(i).displayDetails();
+        for (Person person : personList) {
+            person.displayDetails();
         }
         System.out.println("-> Display success");
     }
 
     public boolean updatePersonById(String id) {
-        int index = -1;
-        for (int i = 0; i < personList.size(); i++) {
-            if (id.equals(personList.get(i).getId())) {
-                index = 0;
-                personList.get(i).updatePerson();
+        for (Person person : personList) {
+            if (id.equals(person.getId())) {
+                person.updatePerson();
                 System.out.println("-> Update success");
-                break;
+                return true;
             }
         }
-        if (index != -1) {
-            return true;
-        } else {
-            System.out.println("The person with ID " + id + " not found!");
-            return false;
-        }
+        System.out.println("The person with ID " + id + " not found!");
+        return false;
     }
 
     public boolean deletePersonById(String id) {
-        int index = -1;
         for (int i = 0; i < personList.size(); i++) {
             if (id.equals(personList.get(i).getId())) {
-                index = 0;
                 personList.remove(i);
                 System.out.println("-> Delete success");
-                break;
+                return true;
             }
         }
-        if (index != -1) {
-            return true;
-        } else {
-            System.out.println("The person with ID " + id + " not found!");
-            return false;
-        }
+        System.out.println("The person with ID " + id + " not found!");
+        return false;
     }
 
-    public boolean findPersonById(String id) {
-        int index = -1;
-        for (int i = 0; i < personList.size(); i++) {
-            if (id.equals(personList.get(i).getId())) {
-                index = 0;
-                personList.get(i).displayDetails();
+    public Person findPersonById(String id) {
+        for (Person person : personList) {
+            if (id.equals(person.getId())) {
+                person.displayDetails();
                 System.out.println("-> Find success");
-                break;
+                return person;
             }
         }
-        if (index != -1) {
-            return true;
-        } else {
-            System.out.println("The person with ID " + id + " not found!");
-            return false;
-        }
+        System.out.println("The person with ID " + id + " not found!");
+        return null;
     }
 
-    public void findTop3Students() {
-        for (int i = 0; i < personList.size(); i++) {
-            for (int k = i + 1; k < personList.size(); k++) {
-                if (personList.get(i).getGpa() < personList.get(k).getGpa()) {
-                    Collections.swap(personList, i, k);
-                }
-            }
-        }
-        System.out.print("- 1st Student: ");
-        personList.get(0).displayDetails();
-        System.out.print("- 2nd Student: ");
-        personList.get(1).displayDetails();
-        System.out.print("- 3rd Student: ");
-        personList.get(2).displayDetails();
-        System.out.println("-> Find top 3 students success");
-    }
-
-    public void findTeacherWithHighestIncome() {
-        double max = 0;
-        for (int i = 0; i < personList.size(); i++) {
-            if (personList.get(i) instanceof Teacher && personList.get(i).calculateIncome() > max) {
-                max = personList.get(i).calculateIncome();
-            }
-        }
-        for (int i = 0; i < personList.size(); i++) {
-            if (personList.get(i) instanceof Teacher && personList.get(i).calculateIncome() == max) {
-                personList.get(i).displayDetails();
-                System.out.println("-> Find teacher with highest income success");
-                break;
-            }
-        }
-    }
-
-    public void findStudentsWithScholarship() {
-        for (int i = 0; i < personList.size(); i++) {
-            if (personList.get(i).getGpa() > 3.5) {
-                personList.get(i).displayDetails();
+    public ArrayList<Student> findStudentsWithScholarship() {
+        ArrayList<Student> scholarshipStudents = new ArrayList<>();
+        for (Person person : personList) {
+            if (person instanceof Student && person.getGpa() > 3.5) {
+                scholarshipStudents.add((Student) person);
             }
         }
         System.out.println("-> Find students with scholarship success");
+        return scholarshipStudents;
+    }
+
+
+    public ArrayList<Student> findTop3Students() {
+        ArrayList<Student> students = new ArrayList<>();
+        for (Person person : personList) {
+            if (person instanceof Student) {
+                students.add((Student) person);
+            }
+        }
+        students.sort((s1, s2) -> Double.compare(s2.getGpa(), s1.getGpa()));
+        ArrayList<Student> top3 = new ArrayList<>();
+        for (int i = 0; i < Math.min(3, students.size()); i++) {
+            top3.add(students.get(i));
+        }
+        System.out.println("-> Find top 3 students success");
+        return top3;
+    }
+
+    public Teacher findTeacherWithHighestIncome() {
+        Teacher highestIncomeTeacher = null;
+        double maxIncome = 0;
+        for (Person person : personList) {
+            if (person instanceof Teacher) {
+                double income = person.calculateIncome();
+                if (income > maxIncome) {
+                    maxIncome = income;
+                    highestIncomeTeacher = (Teacher) person;
+                }
+            }
+        }
+        if (highestIncomeTeacher != null) {
+            System.out.println("-> Find teacher with highest income success");
+        } else {
+            System.out.println("No teacher found.");
+        }
+        return highestIncomeTeacher;
     }
 
     public void Count() {
         int countStudent = 0;
         int countTeacher = 0;
-        for (int i = 0; i < personList.size(); i++) {
-            if (personList.get(i) instanceof Student) {
+        for (Person person : personList) {
+            if (person instanceof Student) {
                 countStudent++;
-            } else {
+            } else if (person instanceof Teacher) {
                 countTeacher++;
             }
         }
